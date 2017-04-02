@@ -41,7 +41,7 @@ public class DaubleQueueApplication extends Application<DaubleQueueConfiguration
     	environment.lifecycle().manage(receiver);
     	SecondReceiver secondReceiver = new SecondReceiver();
     	environment.lifecycle().manage(secondReceiver);
-    	environment.lifecycle().manage(new Logstash());
+//    	environment.lifecycle().manage(new Logstash());
         // TODO: implement application
     }
 

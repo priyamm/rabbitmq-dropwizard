@@ -1,6 +1,11 @@
 logging:
-  level: INFO
+  level: INFO, TRACE
   loggers:
     com.dauble.queue: DEBUG
     
+logging:
+  appenders:
+    - type: console
+      threshold: TRACE
+      target: stdout
 

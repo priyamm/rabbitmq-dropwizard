@@ -6,6 +6,8 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeoutException;
 
+import com.dauble.queue.QueueJob.client.Logstash;
+import com.dauble.queue.QueueJob.client.LogstashHelper;
 import com.dauble.queue.QueueJob.client.Receiver;
 import com.dauble.queue.QueueJob.client.SecondReceiver;
 import com.dauble.queue.QueueJob.client.Sender;
@@ -33,10 +35,13 @@ public class DaubleQueueApplication extends Application<DaubleQueueConfiguration
     @Override
     public void run(final DaubleQueueConfiguration configuration,
                     final Environment environment) throws KeyManagementException, NoSuchAlgorithmException, IOException, TimeoutException, URISyntaxException, InterruptedException {
-    	environment.jersey().register(new Receiver());
-    	environment.jersey().register(new Sender());
-    	
-    	environment.jersey().register(new SecondReceiver());
+    	Sender sender = new Sender();
+    	environment.lifecycle().manage(sender);
+    	Receiver receiver = new Receiver();
+    	environment.lifecycle().manage(receiver);
+    	SecondReceiver secondReceiver = new SecondReceiver();
+    	environment.lifecycle().manage(secondReceiver);
+    	environment.lifecycle().manage(new Logstash());
         // TODO: implement application
     }
 
